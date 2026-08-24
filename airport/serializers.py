@@ -36,8 +36,6 @@ class RouteListSerializer(RouteSerializer):
         slug_field="name",
         read_only=True,
     )
-    class Meta:
-        model = RouteSerializer
 
 
 class AirplaneTypeSerializer(serializers.ModelSerializer):
@@ -50,7 +48,7 @@ class AirplaneSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Airplane
-        fields = ("id", "name", "rows", "seats_in_row", "airplane_type")
+        fields = ("id", "name", "rows", "capacity", "seats_in_row", "airplane_type", "image")
 
 
 class AirplaneListSerializer(AirplaneSerializer):
@@ -58,6 +56,12 @@ class AirplaneListSerializer(AirplaneSerializer):
         slug_field="name",
         read_only=True,
     )
+
+
+class AirplaneImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airplane
+        fields = ("id", "image")
 
 
 class CrewSerializer(serializers.ModelSerializer):
@@ -163,6 +167,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ("id", "created_at", "tickets", "user")
+        read_only_fields = ("id", "created_at", "user")
 
     def create(self, validated_data):
         with transaction.atomic():

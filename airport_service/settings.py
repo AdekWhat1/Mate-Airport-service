@@ -25,10 +25,13 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-s@b%a)h+9py_ixelbox&%#q&vmn^1lr-j(cyf(j*j0yycv-$_d"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-dev-default-key-change-in-production",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() in ("true", "1", "yes")
 
 ALLOWED_HOSTS = []
 
@@ -87,9 +90,9 @@ WSGI_APPLICATION = "airport_service.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("POSTGRES_DB", "airport"),
+        "NAME": os.environ.get("POSTGRES_DB", "airport_db"),
         "USER": os.environ.get("POSTGRES_USER", "postgres"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "airport"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "postgres"),
         "HOST": os.environ.get("POSTGRES_HOST", "127.0.0.1"),
         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }

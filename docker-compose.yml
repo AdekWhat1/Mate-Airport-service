@@ -14,7 +14,8 @@ services:
       - POSTGRES_DB=airport_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - SECRET_KEY=django-insecure-docker-compose-secret-key-airport
+      - SECRET_KEY=django-insecure-docker-secret-key-airport
+      - DJANGO_DEBUG=True
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
